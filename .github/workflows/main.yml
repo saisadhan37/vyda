@@ -29,11 +29,7 @@ jobs:
 
       - name: Connect to Pritunl VPN
         uses: ./pritunl-vpn-action
-        with:
-          server: 'http://35.84.238.102'
-          username: test
-          password: 123456
-          profile: 'srh - test'
+
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
