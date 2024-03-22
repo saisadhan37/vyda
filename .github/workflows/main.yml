@@ -35,7 +35,7 @@ jobs:
 
       - name: Import Pritunl GPG Key
         run: |
-          sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
+          wget -qO - https://repo.pritunl.com/stable/apt/public.key | sudo apt-key add -
 
       - name: Update Package List
         run: sudo apt-get update
