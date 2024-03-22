@@ -27,14 +27,24 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      - name: Download Pritunl Client
+      - name: Add Pritunl Repository
         run: |
-          wget https://client.pritunl.com/pkgs/pritunl-client.deb -O pritunl-client.deb
+          sudo tee /etc/apt/sources.list.d/pritunl.list << EOF
+          deb https://repo.pritunl.com/stable/apt focal main
+          EOF
+
+      - name: Import Pritunl GPG Key
+        run: |
+          sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
+
+      - name: Update Package List
+        run: sudo apt-get update
 
       - name: Install Pritunl Client
-        run: |
-          sudo dpkg -i pritunl-client.deb
-          sudo apt-get install -f   # Install any missing dependencies
+        run: sudo apt-get install -y pritunl-client
+
+      - name: Start Pritunl Client
+        run: sudo systemctl start pritunl-client
       
       - name: Configure Pritunl Client
         run: |
