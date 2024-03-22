@@ -37,8 +37,6 @@ jobs:
         run: |
           sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
 
-      - name: Update Package List
-        run: sudo apt-get update
 
       - name: Install Pritunl Client
         run: sudo apt-get install -y pritunl-client
