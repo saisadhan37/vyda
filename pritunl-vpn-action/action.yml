@@ -2,4 +2,5 @@ name: 'Connect to Pritunl VPN'
 description: 'Establish connection to Pritunl VPN'
 runs:
   using: 'shell'
-  command: './pritunl-vpn-action/connect.sh'
+  shell: 'bash'
+  path: './pritunl-vpn-action/connect.sh'
