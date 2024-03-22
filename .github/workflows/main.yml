@@ -28,7 +28,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Connect to Pritunl VPN
-        uses: pritunl/actions/pritunl-client@v1
+        uses: ./pritunl-vpn-action
         with:
           server: 'http://35.84.238.102'
           username: test
