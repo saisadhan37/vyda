@@ -33,9 +33,11 @@ jobs:
           deb https://repo.pritunl.com/stable/apt focal main
           EOF
 
-      - name: Import Pritunl GPG Key
-        run: |
-          wget -qO - https://repo.pritunl.com/stable/apt/public.key | sudo apt-key add -
+      - name: Download Pritunl GPG Key
+        run: wget -qO /tmp/pritunl-public.key https://repo.pritunl.com/stable/apt/public.key
+
+      - name: Add Pritunl GPG Key to Keyring
+        run: sudo gpg --no-default-keyring --keyring /usr/share/keyrings/pritunl-archive-keyring.gpg --import /tmp/pritunl-public.key
 
       - name: Update Package List
         run: sudo apt-get update
@@ -43,7 +45,6 @@ jobs:
       - name: Install Pritunl Client
         run: |
           sudo apt-get install -y pritunl-client
-
       - name: Start Pritunl Client
         run: sudo systemctl start pritunl-client
       
