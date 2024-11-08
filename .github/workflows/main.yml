@@ -1,6 +1,7 @@
 name: Scheduled 5-Minute Interval Workflow
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '*/5 * * * *'  # Triggers every 5 minutes
 
