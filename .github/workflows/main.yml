@@ -1,74 +1,12 @@
-# This is a basic workflow to help you get started with Actions
+name: Scheduled 5-Minute Interval Workflow
 
-name: CI
-
-# Controls when the workflow will run
 on:
-#  workflow_dispatch:
-#    inputs:
-#      branch:
-#        description: 'Branch to use'     
-#        required: true
-#        default: 'testnew'
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-     branches:
-       main
+  schedule:
+    - cron: '*/5 * * * *'  # Triggers every 5 minutes
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  scheduled-task:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-
-      - name: Add Pritunl Repository
-        run: |
-          sudo tee /etc/apt/sources.list.d/pritunl.list << EOF
-          deb https://repo.pritunl.com/stable/apt focal main
-          EOF
-
-      - name: Download Pritunl GPG Key
-        run: wget -qO /tmp/pritunl-public.key https://repo.pritunl.com/stable/apt/public.key
-
-      - name: Add Pritunl GPG Key to Keyring
-        run: sudo gpg --no-default-keyring --keyring /usr/share/keyrings/pritunl-archive-keyring.gpg --import /tmp/pritunl-public.key
-
-      - name: Update Package List
-        run: sudo apt-get update
-
-      - name: Install Pritunl Client
-        run: |
-          sudo apt-get install -y pritunl-client
-      - name: Start Pritunl Client
-        run: sudo systemctl start pritunl-client
-      
-      - name: Configure Pritunl Client
-        run: |
-          echo "server: 'http://35.84.238.102'" >> ~/.pritunl.conf
-          echo "username: test" >> ~/.pritunl.conf
-          echo "password: 123456" >> ~/.pritunl.conf
-          echo "profile: 'srh - test'" >> ~/.pritunl.conf
-      
-      - name: Connect to Pritunl VPN
-        run: sudo pritunl-client start -c ~/.pritunl.conf
-
-      - name: Verify VPN Connection
-        run: sudo pritunl-client status
-
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: create to
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        if: always()     
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      - name: Display current time
+        run: echo "This workflow was triggered at $(date)"
