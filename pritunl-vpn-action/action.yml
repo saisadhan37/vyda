@@ -1,4 +1,4 @@
-name: 'Connect to Pritunl VPN'
+name: 'Connect to Pritunl VPN' #test
 description: 'Establish connection to Pritunl VPN'
 runs:
   using: 'shell'
